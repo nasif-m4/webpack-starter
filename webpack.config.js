@@ -1,4 +1,5 @@
 const path = require('path');
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
@@ -23,7 +24,12 @@ module.exports = {
     rules: [
       {
         test: /\.scss$/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use: [
+            // 'style-loader',
+            MiniCssExtractPlugin.loader,
+            'css-loader',
+            'sass-loader'
+        ],
       },
 
       {
@@ -45,6 +51,8 @@ module.exports = {
   },
 
   plugins: [
+    new MiniCssExtractPlugin(),
+
     new BrowserSyncPlugin({
       host: 'localhost',
       port: 3000,
