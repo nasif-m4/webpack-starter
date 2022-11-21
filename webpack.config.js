@@ -1,7 +1,7 @@
 const path = require('path');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 const BrowserSyncPlugin = require('browser-sync-webpack-plugin');
 
 module.exports = {
@@ -14,8 +14,8 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].[contenthash].js',
-    clean: true,
     assetModuleFilename: '[name].[ext]',
+    clean: true,
   },
 
   devtool: 'source-map',
@@ -50,8 +50,16 @@ module.exports = {
     ],
   },
 
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    }
+  },
+
   plugins: [
-    new MiniCssExtractPlugin(),
+    new MiniCssExtractPlugin({
+      filename: '[name].[contenthash].css',
+    }),
 
     new BrowserSyncPlugin({
       host: 'localhost',
@@ -65,7 +73,7 @@ module.exports = {
       template: 'src/template.html',
     }),
 
-    new BundleAnalyzerPlugin(),
+    // new BundleAnalyzerPlugin(),
   ],
-}
+};
 
